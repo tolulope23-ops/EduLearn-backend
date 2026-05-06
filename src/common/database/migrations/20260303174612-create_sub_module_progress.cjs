@@ -44,7 +44,7 @@ module.exports = {
       },
 
       lastAttemptId: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
       },
 
