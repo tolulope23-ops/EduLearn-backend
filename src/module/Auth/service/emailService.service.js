@@ -1,13 +1,20 @@
-import sgMail from "@sendgrid/mail";
-import { SENDGRID_API_KEY, SENDGRID_FROM_EMAIL } from "../../../common/config/env.config.js";
+import nodemailer from "nodemailer";
+// import { Resend } from "resend";
+import { RESEND_API_KEY, RESEND_FROM_EMAIL } from "../../../common/config/env.config.js";
 import { verifyEmailTemplate } from "../template/emailVerification.template.js";
 import { passwordResetTemplate } from "../template/passwordReset.template.js";
 
-export class EmailService {
-    constructor() {
-    sgMail.setApiKey(SENDGRID_API_KEY);
-  }
+// const resend = new Resend(RESEND_API_KEY);
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
+
+export class EmailService {
   /**
    * Send an email
    * @param {string} to - Recipient email
@@ -17,12 +24,14 @@ export class EmailService {
 
   async sendMail(to, subject, html) {
     try {
-      await sgMail.send({
+        const info = await transporter.sendMail({
+        from: `"EduLearn" <${process.env.GMAIL_USER}>`,
         to,
-        from: SENDGRID_FROM_EMAIL,
         subject,
         html,
       });
+
+      // console.log("Email sent:", info.messageId);
     } catch (error) {
       console.error("Failed to send email:", error.response?.body || error.message);
       throw error;
