@@ -82,16 +82,16 @@ export class UserAuthService {
     });
     
     // Send email verification
-    try {
-      await this.verifyService.sendAuthVerification(
+    this.verifyService
+      .sendAuthVerification(
         newUser.id,
         email,
         "EMAIL_VERIFICATION",
         getFirstName(profile.fullName)
-      );
-    } catch (error) {
-      console.error("Verification email failed:", error.message);
-    };
+      )
+      .catch((error) => {
+        console.error("Verification email failed:", error.message);
+      });
 
     return {
       success: true,
