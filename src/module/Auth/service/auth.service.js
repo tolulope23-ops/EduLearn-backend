@@ -81,17 +81,20 @@ export class UserAuthService {
       location,
     });
     
+    //Mark email verified, instead of sending verifiation email to verify by user(implement later)
+    await this.userRepo.markEmailVerified(newUser.id);
+    // await this.userRepo.markEmailVerified(user.id);
     // Send email verification
-    this.verifyService
-      .sendAuthVerification(
-        newUser.id,
-        email,
-        "EMAIL_VERIFICATION",
-        getFirstName(profile.fullName)
-      )
-      .catch((error) => {
-        console.error("Verification email failed:", error.message);
-      });
+    // this.verifyService
+    //   .sendAuthVerification(
+    //     newUser.id,
+    //     email,
+    //     "EMAIL_VERIFICATION",
+    //     getFirstName(profile.fullName)
+    //   )
+    //   .catch((error) => {
+    //     console.error("Verification email failed:", error.message);
+    //   });
 
     return {
       success: true,

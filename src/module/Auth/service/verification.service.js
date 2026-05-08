@@ -34,7 +34,7 @@ export class UserAuthVerificationService {
   }
 
   async sendAuthVerification(userId, email, type, name) {
-    const rawToken = await this.createVerificationToken(userId, type);
+    // const rawToken = await this.createVerificationToken(userId, type);
     // console.log(`Sending ${type} token:`, rawToken);
 
     const path = type === "EMAIL_VERIFICATION" ? "verify-email" : "reset-password";
