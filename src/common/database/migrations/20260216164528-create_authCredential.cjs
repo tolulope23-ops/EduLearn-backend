@@ -17,7 +17,7 @@ module.exports = {
       },
 
       type: {
-        type: Sequelize.ENUM('PASSWORD','BIOMETRIC'),
+        type: Sequelize.ENUM('PASSWORD'),
         allowNull: false,
         defaultValue: 'PASSWORD'
       },
@@ -27,15 +27,15 @@ module.exports = {
         allowNull: false
       },
 
-      failedAttempts: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-      },
+      // failedAttempts: {
+      //   type: Sequelize.INTEGER,
+      //   defaultValue: 0
+      // },
 
-      lockedUntil: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
+      // lockedUntil: {
+      //   type: Sequelize.DATE,
+      //   allowNull: true
+      // },
 
       lastLogin: {
         type: Sequelize.DATE,

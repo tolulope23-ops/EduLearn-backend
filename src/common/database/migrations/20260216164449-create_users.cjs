@@ -18,18 +18,18 @@ module.exports = {
 
       accountStatus: {
         type: Sequelize.ENUM('ACTIVE', 'PENDING', 'SUSPENDED', 'DELETED'),
-        defaultValue: 'PENDING'
+        defaultValue: 'ACTIVE'
       },
 
-      isEmailVerified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
+      // isEmailVerified: {
+      //   type: Sequelize.BOOLEAN,
+      //   defaultValue: true
+      // },
 
-      emailVerifiedAt: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
+      // emailVerifiedAt: {
+      //   type: Sequelize.DATE,
+      //   allowNull: true
+      // },
 
       createdAt: {
         allowNull: false,
