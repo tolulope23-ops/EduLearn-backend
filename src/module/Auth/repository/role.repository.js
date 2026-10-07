@@ -1,4 +1,4 @@
-import {Role} from "../models/index.js";
+import { Role } from "../models/index.js";
 import { handleSequelizeError } from "../../../common/error/sequeliseError.error.js";
 import { RecordNotFoundError } from "../../../common/error/domainError.error.js";
 

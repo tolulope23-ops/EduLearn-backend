@@ -3,7 +3,7 @@ import User from './user.model.js';
 import AuthCredential from './authCredential.model.js';
 import RefreshToken from './refreshToken.model.js';
 import AuthSession from './authSession.model.js';
-import VerificationToken from './verificationToken.model.js';
+// import VerificationToken from './verificationToken.model.js';
 import Role from './role.model.js';
 import Permission from './permission.model.js';
 import UserRole from './userRole.model.js';
@@ -19,7 +19,7 @@ export {
   AuthCredential,
   RefreshToken,
   AuthSession,
-  VerificationToken,
+  // VerificationToken,
   Role,
   Permission,
   UserRole,

@@ -3,7 +3,7 @@ import StudentProfile from './studentProfile.model.js';
 import AuthCredential from './authCredential.model.js';
 import RefreshToken from './refreshToken.model.js';
 import AuthSession from './authSession.model.js';
-import VerificationToken from './verificationToken.model.js';
+// import VerificationToken from './verificationToken.model.js';
 import Role from './role.model.js';
 import Permission from './permission.model.js';
 import UserRole from './userRole.model.js';
@@ -19,8 +19,8 @@ User.hasMany(AuthSession, { foreignKey: 'userId' });
 AuthSession.belongsTo(User, { foreignKey: 'userId' });
 
 // User ↔ VerificationToken
-User.hasMany(VerificationToken, { foreignKey: 'userId' });
-VerificationToken.belongsTo(User, { foreignKey: 'userId' });
+// User.hasMany(VerificationToken, { foreignKey: 'userId' });
+// VerificationToken.belongsTo(User, { foreignKey: 'userId' });
 
 // User ↔ StudentProfile (new)
 User.hasOne(StudentProfile, { foreignKey: 'userId', as: 'students' });
