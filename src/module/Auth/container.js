@@ -3,8 +3,8 @@ import { UserAuthRepository } from "./repository/authCredential.repository.js";
 
 import { UserAuthService } from "./service/auth.service.js";
 import { PasswordHasher } from "./utils/passwordHashing.utils.js";
-import { UserAuthVerificationService } from "./service/verification.service.js";
-import { UserAuthVerificationRepository } from "./repository/verificationToken.repository.js";
+// import { UserAuthVerificationService } from "./service/verification.service.js";
+// import { UserAuthVerificationRepository } from "./repository/verificationToken.repository.js";
 import { EmailService } from "./service/emailService.service.js";
 import { UserSessionService } from "./service/session.service.js";
 import { UserSessionRepository } from "./repository/authSession.repository.js";
@@ -26,7 +26,7 @@ const passwordHash = new PasswordHasher();
 const roleRep = new RoleRepository();
 const userRole = new UserRoleRepository();
 
-const userVerificationRepoInstance = new UserAuthVerificationRepository();
+// const userVerificationRepoInstance = new UserAuthVerificationRepository();
 const emailInstance = new EmailService();
 
 const sessionRepoInstance = new UserSessionRepository();
@@ -44,11 +44,11 @@ export const refreshTokenService = new UserRefreshTokenService(
   sessionService
 );
 
-export const verificationService = new UserAuthVerificationService(
-  userVerificationRepoInstance,
-  emailInstance,
-  userRepoInstance
-);
+// export const verificationService = new UserAuthVerificationService(
+//   userVerificationRepoInstance,
+//   emailInstance,
+//   userRepoInstance
+// );
 
 export const studentServiceInstance = new StudentProfileService(studentProfileRepoInstance, classLevelRepoInstance);
 
@@ -56,8 +56,8 @@ export const authService = new UserAuthService(
   userRepoInstance,
   userAuthRepoInstance,
   passwordHash,
-  verificationService,
-  userVerificationRepoInstance,
+  // verificationService,
+  // userVerificationRepoInstance,
   sessionService,
   refreshTokenService,
   userRole,
@@ -67,5 +67,5 @@ export const authService = new UserAuthService(
 
 export const authMiddleware = new UserAuthMiddleware(sessionRepoInstance);
 
-export const authController = new UserAuthController(authService, verificationService, refreshTokenService);
+export const authController = new UserAuthController(authService, refreshTokenService);
 export const studentProfileController = new StudentProfileController(studentServiceInstance);

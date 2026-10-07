@@ -27,19 +27,19 @@ router.post('/register', validationMiddleware(signupSchema), authController.sign
 router.post('/login', validationMiddleware(loginSchema), authController.login);
 
 // Email verification (from link sent in email)
-router.post('/verify-email', authController.verifyEmail);
+// router.post('/verify-email', authController.verifyEmail);
 
 //Resend Email verification
-router.post('/resend-verification', resendEmailLimiter, authController.resendEmailVerification);
+// router.post('/resend-verification', resendEmailLimiter, authController.resendEmailVerification);
 
 // Forgot password - send reset link
-router.post('/forgot-password', forgotPasswordLimiter, validationMiddleware(forgotPasswordSchema), authController.forgotPassword);
+// router.post('/forgot-password', forgotPasswordLimiter, validationMiddleware(forgotPasswordSchema), authController.forgotPassword);
 
 //Resend Email for password reset verification
-router.post('/password-resend-verification', authController.resendPasswordResetVerification);
+// router.post('/password-resend-verification', authController.resendPasswordResetVerification);
 
 // Reset password - using token from email sent from the frontend
-router.post("/reset-password", validationMiddleware(resetPasswordSchema), authController.resetPassword);
+// router.post("/reset-password", validationMiddleware(resetPasswordSchema), authController.resetPassword);
 
 router.post("/refresh-token", authController.refreshToken);
 
