@@ -1,19 +1,19 @@
 import { BadRequestError } from "../../../common/error/httpError.error.js";
 import { UserAuthService } from "../service/auth.service.js";
-import { UserAuthVerificationService } from "../service/verification.service.js";
+// import { UserAuthVerificationService } from "../service/verification.service.js";
 import { UserRefreshTokenService } from "../service/refreshToken.service.js";
 import { cookieOptions } from "../../../common/config/cookie.config.js";
 
 export class UserAuthController {
   /**
    * @param {UserAuthService} userAuthService
-   * @param {UserAuthVerificationService} verifyService
+  //  * @param {UserAuthVerificationService} verifyService
    * @param {UserRefreshTokenService} refreshTokenService
    * 
    */
-  constructor(userAuthService, verifyService, refreshTokenService) {
+  constructor(userAuthService, refreshTokenService) {
     this.userAuthService = userAuthService;
-    this.verifyService = verifyService;
+    // this.verifyService = verifyService;
     this.refreshTokenService = refreshTokenService;
   }
 
@@ -78,120 +78,120 @@ export class UserAuthController {
     }
   };
 
-  verifyEmail = async (req, res, next) => {
-    try {
-      const {token} = req.body;
+  // verifyEmail = async (req, res, next) => {
+  //   try {
+  //     const {token} = req.body;
 
-      if (!token) {
-        throw new BadRequestError("Verification token is required");
-      };
+  //     if (!token) {
+  //       throw new BadRequestError("Verification token is required");
+  //     };
 
-      const ipAddress = req.ip;
-      const userAgent = req.headers["user-agent"] || "unknown";
+  //     const ipAddress = req.ip;
+  //     const userAgent = req.headers["user-agent"] || "unknown";
 
-      const result =
-        await this.userAuthService.verifyUserEmail(token, {
-          ipAddress,
-          userAgent,
-        });
+  //     const result =
+  //       await this.userAuthService.verifyUserEmail(token, {
+  //         ipAddress,
+  //         userAgent,
+  //       });
 
-      res.cookie("refreshToken", result.refreshToken, cookieOptions);
+  //     res.cookie("refreshToken", result.refreshToken, cookieOptions);
 
-      return res.status(200).json({
-        success: true,
-        message: result.message,
-        accessToken: result.accessToken,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: result.message,
+  //       accessToken: result.accessToken,
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
-  resendEmailVerification = async (req, res, next) => {
-    try {
-      const { email } = req.body;
+  // resendEmailVerification = async (req, res, next) => {
+  //   try {
+  //     const { email } = req.body;
 
-      if (!email) {
-        throw new BadRequestError("Email is required");
-      }
+  //     if (!email) {
+  //       throw new BadRequestError("Email is required");
+  //     }
 
-      const result =
-        await this.userAuthService.resendEmailVerification(email);
+  //     const result =
+  //       await this.userAuthService.resendEmailVerification(email);
 
-      return res.status(200).json({
-        success: true,
-        message: result.message,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
-  forgotPassword = async (req, res, next) => {
-    try {
-      const { email } = req.body;
-      if (!email) {
-        throw new BadRequestError("Email is required");
-      }
+  // forgotPassword = async (req, res, next) => {
+  //   try {
+  //     const { email } = req.body;
+  //     if (!email) {
+  //       throw new BadRequestError("Email is required");
+  //     }
 
-      const result = await this.userAuthService.forgotPassword(email);
+  //     const result = await this.userAuthService.forgotPassword(email);
 
-      return res.status(200).json({
-        success: true,
-        message: result.message,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
-  resendPasswordResetVerification = async (req, res, next) => {
-    try {
-      const { email } = req.body;
+  // resendPasswordResetVerification = async (req, res, next) => {
+  //   try {
+  //     const { email } = req.body;
 
-      if (!email) {
-        throw new BadRequestError("Email is required");
-      }
+  //     if (!email) {
+  //       throw new BadRequestError("Email is required");
+  //     }
 
-      const result =
-        await this.userAuthService.resendPasswordResetVerification(email);
+  //     const result =
+  //       await this.userAuthService.resendPasswordResetVerification(email);
 
-      return res.status(200).json({
-        success: true,
-        message: result.message,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
-  resetPassword = async (req, res, next) => {
-    try {
-      const { token, newPassword } = req.body;
+  // resetPassword = async (req, res, next) => {
+  //   try {
+  //     const { token, newPassword } = req.body;
 
-      if (!token || !newPassword) {
-        throw new BadRequestError(
-          "Token and new password are required"
-        );
-      }
+  //     if (!token || !newPassword) {
+  //       throw new BadRequestError(
+  //         "Token and new password are required"
+  //       );
+  //     }
 
-      const result =
-        await this.userAuthService.resetPassword(
-          token,
-          newPassword
-        );
+  //     const result =
+  //       await this.userAuthService.resetPassword(
+  //         token,
+  //         newPassword
+  //       );
 
-      // Clear refresh cookie after password reset
-      res.clearCookie("refreshToken", cookieOptions);
+  //     // Clear refresh cookie after password reset
+  //     res.clearCookie("refreshToken", cookieOptions);
 
-      return res.status(200).json({
-        success: true,
-        message: result.message,
-      });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
   logout = async (req, res, next) => {
     try {
