@@ -15,7 +15,7 @@ const AuthCredential = sequelize.define("AuthCredential", {
   },
 
   type: {
-    type: DataTypes.ENUM("PASSWORD", "BIOMETRIC"),
+    type: DataTypes.ENUM("PASSWORD"),
     allowNull: false,
     defaultValue: "PASSWORD"
   },
@@ -25,15 +25,15 @@ const AuthCredential = sequelize.define("AuthCredential", {
     allowNull: false,
   },
 
-  failedAttempts: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-  },
+  // failedAttempts: {
+  //   type: DataTypes.INTEGER,
+  //   defaultValue: 0,
+  // },
 
-  lockedUntil: { 
-    type: DataTypes.DATE,
-    allowNull: true
-  },
+  // lockedUntil: { 
+  //   type: DataTypes.DATE,
+  //   allowNull: true
+  // },
 
   lastLogin: {
     type: DataTypes.DATE,
