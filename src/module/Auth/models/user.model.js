@@ -16,18 +16,18 @@ const User = sequelize.define("User", {
 
   accountStatus: {
     type: DataTypes.ENUM("ACTIVE", "PENDING", "SUSPENDED", "DELETED"),
-    defaultValue: "PENDING",
+    defaultValue: "ACTIVE",
   },
 
-  isEmailVerified: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
+  // isEmailVerified: {
+  //   type: DataTypes.BOOLEAN,
+  //   defaultValue: false,
+  // },
 
-  emailVerifiedAt: {
-    type: DataTypes.DATE,
-    allowNull: true
-  },
+  // emailVerifiedAt: {
+  //   type: DataTypes.DATE,
+  //   allowNull: true
+  // },
 
 }, {
   timestamps: true,
