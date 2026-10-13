@@ -21,15 +21,15 @@ module.exports = {
         defaultValue: 'ACTIVE'
       },
 
-      // isEmailVerified: {
-      //   type: Sequelize.BOOLEAN,
-      //   defaultValue: true
-      // },
+      accountType: {
+        type: Sequelize.STRING,
+        defaultValue: "Student"
+      },
 
-      // emailVerifiedAt: {
-      //   type: Sequelize.DATE,
-      //   allowNull: true
-      // },
+      enrolled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
 
       createdAt: {
         allowNull: false,
