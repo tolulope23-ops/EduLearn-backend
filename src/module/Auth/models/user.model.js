@@ -19,15 +19,16 @@ const User = sequelize.define("User", {
     defaultValue: "ACTIVE",
   },
 
-  // isEmailVerified: {
-  //   type: DataTypes.BOOLEAN,
-  //   defaultValue: false,
-  // },
+  accountType: {
+    type: DataTypes.STRING,
+    defaultValue: "Student"
+  },
 
-  // emailVerifiedAt: {
-  //   type: DataTypes.DATE,
-  //   allowNull: true
-  // },
+  enrolled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
 
 }, {
   timestamps: true,
