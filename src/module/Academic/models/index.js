@@ -5,12 +5,12 @@ import Module from './module.model.js';
 import SubModule from './subModule.model.js';
 import ModuleProgress from './moduleProgress.model.js';
 import SubmoduleProgress from './subModuleProgress.model.js';
-import StudentProfile from '../../Auth/models/studentProfile.model.js';
-import StudentCourses from './studentCourse.model.js';
+import StudentProfile from '../../auth/models/studentProfile.model.js';
+import Enrollment from '../../auth/models/enrollment.model.js';
 import QuizQuestion from './quizQuestion.model.js';
 import QuizOption from './quizOption.model.js';
 
-// Import associations to initialize relationships
+//Import associations to initialize relationships
 import './associations.js';
 
 export {
@@ -22,7 +22,7 @@ export {
   ModuleProgress,
   SubmoduleProgress,
   StudentProfile,
-  StudentCourses,
   QuizQuestion,
   QuizOption,
+  Enrollment
 };

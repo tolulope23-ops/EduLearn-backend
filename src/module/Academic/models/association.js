@@ -5,18 +5,19 @@ import Module from './module.model.js';
 import SubModule from './subModule.model.js';
 import ModuleProgress from './moduleProgress.model.js';
 import SubmoduleProgress from './subModuleProgress.model.js';
-import StudentProfile from '../../Auth/models/studentProfile.model.js';
-import StudentCourses from './studentCourse.model.js';
+import StudentProfile from '../../auth/models/studentProfile.model.js';
 import QuizQuestion from './quizQuestion.model.js';
 import QuizOption from './quizOption.model.js';
+import Enrollment from '../../auth/models/enrollment.model.js';
 
-//  Student ↔ ClassLevel 
-ClassLevel.hasMany(StudentProfile, { foreignKey: 'classLevelId', as: 'students' });
-StudentProfile.belongsTo(ClassLevel, { foreignKey: 'classLevelId', as: 'classLevel' });
+// StudentProfile → Enrollment
+StudentProfile.hasOne(Enrollment, { foreignKey: "studentId", as: "enrollment"});
+Enrollment.belongsTo(StudentProfile, {foreignKey: "studentId", as: "student"});
 
-//Student ↔ Courses 
-StudentProfile.belongsToMany(Course, { through: StudentCourses, foreignKey: 'studentId', otherKey: 'courseId', as: 'courses' });
-Course.belongsToMany(StudentProfile, { through: StudentCourses, foreignKey: 'courseId', otherKey: 'studentId', as: 'students' });
+// ClassLevel → Enrollment
+ClassLevel.hasMany(Enrollment, {foreignKey: "classLevelId", as: "enrollments"});
+Enrollment.belongsTo(ClassLevel, {foreignKey: "classLevelId", as: "classLevel"});
+
 
 // Course → Lessons
 Course.hasMany(Lesson, { foreignKey: 'courseId', as: 'lessons' });
@@ -34,37 +35,18 @@ Module.belongsTo(Lesson, { foreignKey: 'lessonId', as: 'lesson' });
 Module.hasMany(SubModule, { foreignKey: 'moduleId', as: 'submodules' });
 SubModule.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
 
-// Student ↔ Module (progress)
-StudentProfile.belongsToMany(Module, {
-  through: ModuleProgress,
-  foreignKey: 'studentId',
-  otherKey: 'moduleId',
-  as: 'moduleProgress'
-});
-Module.belongsToMany(StudentProfile, {
-  through: ModuleProgress,
-  foreignKey: 'moduleId',
-  otherKey: 'studentId',
-  as: 'students'
+// Student → Module (progress)
+StudentProfile.belongsToMany(Module, {through: ModuleProgress, foreignKey: 'studentId', otherKey: 'moduleId', as: 'moduleProgress'});
+Module.belongsToMany(StudentProfile, {through: ModuleProgress, foreignKey: 'moduleId', otherKey: 'studentId',as: 'students'
 });
 
 ModuleProgress.belongsTo(StudentProfile, { foreignKey: 'studentId', as: 'student' });
 ModuleProgress.belongsTo(Module, { foreignKey: 'moduleId', as: 'module' });
 
-//Student ↔ Submodule (progress)
-StudentProfile.belongsToMany(SubModule, {
-  through: SubmoduleProgress,
-  foreignKey: 'studentId',
-  otherKey: 'submoduleId',
-  as: 'submoduleProgress',
-});
+//Student → Submodule (progress)
+StudentProfile.belongsToMany(SubModule, {through: SubmoduleProgress, foreignKey: 'studentId', otherKey: 'submoduleId', as: 'submoduleProgress'});
 
-SubModule.belongsToMany(StudentProfile, {
-  through: SubmoduleProgress,
-  foreignKey: 'submoduleId',
-  otherKey: 'studentId',
-  as: 'students',
-});
+SubModule.belongsToMany(StudentProfile, {through: SubmoduleProgress,foreignKey: 'submoduleId', otherKey: 'studentId', as: 'students'});
 
 SubmoduleProgress.belongsTo(StudentProfile, { foreignKey: 'studentId', as: 'student' });
 SubmoduleProgress.belongsTo(SubModule, { foreignKey: 'submoduleId', as: 'submodule' });

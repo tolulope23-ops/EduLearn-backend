@@ -25,16 +25,6 @@ const AuthCredential = sequelize.define("AuthCredential", {
     allowNull: false,
   },
 
-  // failedAttempts: {
-  //   type: DataTypes.INTEGER,
-  //   defaultValue: 0,
-  // },
-
-  // lockedUntil: { 
-  //   type: DataTypes.DATE,
-  //   allowNull: true
-  // },
-
   lastLogin: {
     type: DataTypes.DATE,
     allowNull: true,

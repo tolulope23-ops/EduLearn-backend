@@ -99,10 +99,10 @@ export class CourseRepository{
         if (!course) return null;
 
         return {
-        id: course.id,
-        name: course.name,
-        createdAt: course.createdAt,
-        updatedAt: course.updatedAt,
+            id: course.id,
+            name: course.name,
+            createdAt: course.createdAt,
+            updatedAt: course.updatedAt,
         };
     };
 
