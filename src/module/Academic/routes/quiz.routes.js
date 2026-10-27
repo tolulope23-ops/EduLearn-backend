@@ -3,7 +3,7 @@ import { quizControllerInstance } from "../container.js";
 import validateRequest from "../../../common/middleware/validation.middleware.js";
 import { createBulkQuizQuestionsSchema, updateBulkQuizQuestionsSchema } from "../validation/quizQuestion.validation.js";
 import { createQuizOptionSchema, updateQuizOptionSchema } from "../validation/quizOption.validation.js";
-import { authMiddleware } from "../../Auth/container.js";
+import { authMiddleware } from "../../auth/container.js";
 import { retakeQuizSchema, submitQuizSchema } from "../validation/quiz.validation.js";
 
 const router = express.Router();
