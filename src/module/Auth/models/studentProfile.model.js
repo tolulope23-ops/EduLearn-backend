@@ -27,17 +27,7 @@ const StudentProfile = sequelize.define("StudentProfile", {
   phoneNumber: {
     type: DataTypes.STRING,
     allowNull: true,
-  },
-
-  dailyGoal: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-
-  classLevelId: {
-    type: DataTypes.UUID,
-    allowNull: true,
-  },
+  }
 
 }, {
   timestamps: true,

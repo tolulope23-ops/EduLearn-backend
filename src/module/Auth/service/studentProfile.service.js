@@ -1,6 +1,6 @@
 import { StudentProfileRepository } from '../repository/studentProfile.repository.js';
 import { RecordNotFoundError } from '../../../common/error/domainError.error.js';
-import { ClassLevelRepository } from '../../Academic/repository/classLevel.repository.js';
+import { ClassLevelRepository } from '../../academic/repository/classLevel.repository.js';
 
 export class StudentProfileService {
   /**
@@ -24,14 +24,6 @@ export class StudentProfileService {
     return profile;
   };
 
-
-  async getStudentProfileById(id) {
-    const profile = await this.studentProfileRepo.getProfileByStudentId(id);
-    if (!profile) throw new RecordNotFoundError('User profile not found');
-    return profile;
-  };
-
-
   async updateStudentProfile(userId, updateData) {
     const updatePayload = { ...updateData };
     if(updateData.classLevel) {
@@ -50,12 +42,4 @@ export class StudentProfileService {
 
     return updatedProfile;
   };
-
-  
-  /** DELETE PROFILE */
-  async deleteStudentProfile(userId) {
-    const deleted = await this.studentProfileRepo.deleteStudentProfile(userId);
-    if (!deleted) throw new RecordNotFoundError('Student profile not found');
-    return deleted;
-  };
-};
+}
