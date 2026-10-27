@@ -1,35 +1,7 @@
 import ClassLevel from "../models/classLevel.model.js";
 import { handleSequelizeError } from "../../../common/error/sequeliseError.error.js";
-import { RecordNotFoundError } from "../../../common/error/domainError.error.js";
-import { Op } from "sequelize";
 
 export class ClassLevelRepository {
-
-  // CREATE QUERY OPERATION
-  async createClassLevel(data) {
-    try {
-      const classLevel = await ClassLevel.create(data);
-      return this.mapToClassLevelEntity(classLevel);
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  }
-
-  // UPDATE QUERY OPERATION
-  async updateClassLevel(id, data) {
-    try {
-      const [affectedRows] = await ClassLevel.update(data, { where: { id } });
-
-      if (affectedRows === 0) {
-        throw new RecordNotFoundError("ClassLevel not found");
-      }
-
-      const updatedClassLevel = await ClassLevel.findByPk(id);
-      return this.mapToClassLevelEntity(updatedClassLevel);
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  }
 
   // READ QUERY OPERATIONS
   async getClassLevelById(id) {
@@ -50,7 +22,7 @@ export class ClassLevelRepository {
     } catch (error) {
       handleSequelizeError(error);
     }
-  }
+  };
 
   async getAllClassLevels() {
     try {
