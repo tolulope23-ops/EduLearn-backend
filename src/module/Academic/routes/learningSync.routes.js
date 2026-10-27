@@ -6,8 +6,6 @@ const router = express.Router();
 
 router.use(authMiddleware.authenticate());
 
-
 router.post("/sync", learningSyncControllerInstance.syncProgress);
-
 
 export default router;
