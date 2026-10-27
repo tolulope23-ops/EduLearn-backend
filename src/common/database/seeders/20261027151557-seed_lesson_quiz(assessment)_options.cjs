@@ -1,5 +1,5 @@
 'use strict';
-
+const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -93,10 +93,10 @@ module.exports = {
     for (const item of questionsWithOptions) {
       // Find the question using its text
       const [questions] = await queryInterface.sequelize.query(
-        `SELECT id FROM quiz_questions WHERE questionText = :questionText LIMIT 2`,
+        `SELECT id FROM quiz_questions WHERE question = :question LIMIT 1`,
         {
           replacements: {
-            questionText: item.questionText,
+            question: item.questionText,
           },
         }
       );
@@ -111,8 +111,9 @@ module.exports = {
       //associate each option with its question
       for (const option of item.options) {
         optionsToInsert.push({
+          id: uuidv4(),
           questionId,
-          optionText: option.optionText,
+          option: option.optionText,
           isCorrect: option.isCorrect,
           createdAt: now,
           updatedAt: now,

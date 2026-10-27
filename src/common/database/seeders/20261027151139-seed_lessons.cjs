@@ -1,5 +1,6 @@
 'use strict';
 
+const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -25,16 +26,18 @@ module.exports = {
       };
 
       const classLevelId = classLevels[0].id;
+      const now = new Date();
 
     await queryInterface.bulkInsert("lessons", [
       {
-        course: courseId,
-        classLevel: classLevelId,
+        id: uuidv4(),
+        courseId: courseId,
+        classLevelId: classLevelId,
         title: "Human Anatomy",
         description:"In this lesson, students will learn about human anatomy, including the structure of the human body, major organs, and how different body systems work together to maintain life.",
         sequenceNumber: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       },
     ]);
   },

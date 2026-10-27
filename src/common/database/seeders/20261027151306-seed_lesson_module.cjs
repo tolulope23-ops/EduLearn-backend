@@ -1,5 +1,5 @@
 'use strict';
-
+const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -11,13 +11,14 @@ module.exports = {
 
     if (lessons.length === 0) {
       throw new Error('Lesson "Human Anatomy" not found. Seed the lesson first.');
-    }
+    };
 
     const lessonId = lessons[0].id;
 
     //insert lesson module 1 using the retrieved lesson ID
     await queryInterface.bulkInsert("modules", [
       {
+        id: uuidv4(),
         lessonId,
         title: "Foundations Of Anatomy",
         description: "",

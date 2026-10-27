@@ -1,11 +1,11 @@
 'use strict';
-
+const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     //find the assessment submodule, which is submodule 3
     const [submodules] = await queryInterface.sequelize.query(
-      `SELECT id FROM submodules WHERE title = :title LIMIT 2`,
+      `SELECT id FROM submodules WHERE title = :title LIMIT 1`,
       {
         replacements: { title: "Module 1 Assessment"},
       }
@@ -35,8 +35,9 @@ module.exports = {
     //insert all questions with the resolved submodule id
     await queryInterface.bulkInsert("quiz_questions",
       questions.map((question) => ({
+        id: uuidv4(),
         submoduleId,
-        questionText: question.questionText,
+        question: question.questionText,
         createdAt: now,
         updatedAt: now,
       }))

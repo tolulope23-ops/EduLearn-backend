@@ -1,11 +1,11 @@
 'use strict';
-
+const { v4: uuidv4 } = require('uuid');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     //find the parent module of the submodule by its title
     const [modules] = await queryInterface.sequelize.query(
-      `SELECT id FROM modules WHERE title = :title LIMIT 2`,
+      `SELECT id FROM modules WHERE title = :title LIMIT 1`,
       { replacements: {
           title: "Foundations Of Anatomy",
         },
@@ -17,10 +17,12 @@ module.exports = {
     };
 
     const moduleId = modules[0].id;
+    const now = new Date();
 
     //insert the submodule using the retrieved module ID
     await queryInterface.bulkInsert("submodules", [
       {
+        id: uuidv4(),
         moduleId,
         title: "Introduction to Anatomical Terms",
         type: "document",
@@ -33,11 +35,12 @@ module.exports = {
         downloadable: true,
         contentSize: "1mb",
         sequenceNumber: 1,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: now,
+        updatedAt: now,
       },
 
       {
+        id: uuidv4(),
         moduleId,
         title: "Body Planes and Cavities",
         type: "video",
@@ -51,6 +54,7 @@ module.exports = {
         updatedAt: now,
       },
       {
+        id: uuidv4(),
         moduleId,
         title: "Module 1 Assessment",
         type: "quiz",
