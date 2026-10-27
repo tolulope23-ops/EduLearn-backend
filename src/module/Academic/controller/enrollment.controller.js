@@ -13,7 +13,6 @@ export class EnrollmentController{
     enrollStudent = async (req, res, next) => {
         try {
             const userId = req.user.userId;
-            console.log(userId);
             
             const { classLevel, courseNames, dailyGoals } = req.body;
 
