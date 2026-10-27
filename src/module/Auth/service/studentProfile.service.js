@@ -20,8 +20,16 @@ export class StudentProfileService {
 
   async getStudentProfileByUserId(userId) {
     const profile = await this.studentProfileRepo.getProfileByUserId(userId);
-    if (!profile) throw new RecordNotFoundError('User profile not found');
-    return profile;
+      if (!profile) 
+        throw new RecordNotFoundError('User profile not found');
+    return {
+      message: 'Profile retrieved',
+      data: {
+        name: profile.fullName,
+        phone: profile.phoneNumber,
+        location: profile.location,
+      }
+    }
   };
 
   async updateStudentProfile(userId, updateData) {
@@ -35,11 +43,14 @@ export class StudentProfileService {
 
     updatePayload.classLevelId = classlevel.id;
     delete updatePayload.classLevel;
-  }
+  };
 
     const updatedProfile = await this.studentProfileRepo.updateStudentProfile(userId, updatePayload);
     if (!updatedProfile) throw new RecordNotFoundError('Student profile not found');
 
-    return updatedProfile;
+    return{
+      message: 'profile updated successfully',
+      data: updatedProfile
+    }
   };
-}
+};
