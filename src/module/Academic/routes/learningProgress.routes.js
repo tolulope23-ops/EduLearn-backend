@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware } from "../../Auth/container.js";
+import { authMiddleware } from "../../auth/container.js";
 import { learningProgressControllerInstance } from "../container.js";
 
 const router = express.Router();

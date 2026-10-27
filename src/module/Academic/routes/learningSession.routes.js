@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware } from "../../Auth/container.js";
+import { authMiddleware } from "../../auth/container.js";
 import { learningSessionControllerInstance } from "../container.js";
 
 const router = express.Router();
