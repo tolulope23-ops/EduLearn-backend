@@ -1,21 +1,10 @@
 import { Sequelize } from 'sequelize';
-import config from './config/config.cjs';
-
-// const env = process.env.NODE_ENV || 'development';
-// const dbConfig = config[env];
-
-// const sequelize = new Sequelize(
-//   dbConfig.database,
-//   dbConfig.username,
-//   dbConfig.password,
-//   dbConfig
-// );
-
-
 
 // Create Sequelize instance using DATABASE_URL (production standard)
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "mysql",
+  seederStorage: "sequelize",
+  seederStorageTableName: "SequelizeMeta",
   logging: false,
   dialectOptions: {
     ssl: {
