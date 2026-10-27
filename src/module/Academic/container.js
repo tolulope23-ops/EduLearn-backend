@@ -1,22 +1,23 @@
-import { StudentProfileRepository } from "../Auth/repository/studentProfile.repository.js";
+import { StudentProfileRepository } from "../auth/repository/studentProfile.repository.js";
+import { EnrollmentController } from "./controller/enrollment.controller.js";
 import { LearningProgressController } from "./controller/learningProgress.controller.js";
 import { LearningSessionController } from "./controller/learningSession.controller.js";
 import { LearningSyncController } from "./controller/learningSync.controller.js";
 import { LessonController } from "./controller/lesson.controller.js";
 import { ModuleController } from "./controller/module.controller.js";
 import { QuizController } from "./controller/quiz.controller.js";
-import { StudentCourseController } from "./controller/studentCourse.controller.js";
 import { SubModuleController } from "./controller/submodules.controller.js";
-
 import { ClassLevelRepository } from "./repository/classLevel.repository.js";
+
+
 import { CourseRepository } from "./repository/course.repository.js";
+import { EnrollmentRepository } from "./repository/enrollemt.repository.js";
 import { LessonRepository } from "./repository/lesson.repository.js";
 import { ModuleRepository } from "./repository/module.repository.js";
 
 import { ModuleProgressRepository } from "./repository/moduleProgress.repository.js";
 import { QuizOptionRepository } from "./repository/quizOption.repository.js";
 import { QuizQuestionRepository } from "./repository/quizQuestion.repository.js";
-import { StudentCourseRepository } from "./repository/studentCourses.repository.js";
 import { SubModuleRepository } from "./repository/subModule.repository.js";
 import { SubmoduleProgressRepository } from "./repository/subModuleProgress.repository.js";
 
@@ -32,12 +33,12 @@ import { ModuleService } from "./service/module.service.js";
 import { ModuleProgressService } from "./service/moduleProgress.service.js";
 
 import { QuizService } from "./service/quiz.service.js";
-import { StudentCourseService } from "./service/studentCourse.service.js";
 import { SubModuleService } from "./service/subModule.service.js";
 import { SubmoduleProgressService } from "./service/subModuleProgress.service.js";
 
 const courseRepoInstance = new CourseRepository();
-const studentCourseRepoInstance = new StudentCourseRepository();
+
+const studentEnrollmentRepoInstance =  new EnrollmentRepository();
 
 const lessonRepoInstance = new LessonRepository();
 const classLevelRepoInstance =  new ClassLevelRepository();
@@ -51,13 +52,11 @@ const quizQuestionRepo = new QuizQuestionRepository();
 
 const quizOptionRepo = new QuizOptionRepository(); 
 const studentProfileRepoInstance =  new StudentProfileRepository();
-const enrollmentServiceInstance =  new EnrollmentService(studentProfileRepoInstance, studentCourseRepoInstance);
-
 
 
 //Services
-export const studentCourseServiceInstance = new StudentCourseService(courseRepoInstance, studentCourseRepoInstance, studentProfileRepoInstance);
-export const lessonServiceInstance = new LessonService(lessonRepoInstance, courseRepoInstance, classLevelRepoInstance, enrollmentServiceInstance);
+export const studentEnrollmentServiceInstance =  new EnrollmentService(studentProfileRepoInstance, courseRepoInstance, classLevelRepoInstance, studentEnrollmentRepoInstance)
+export const lessonServiceInstance = new LessonService(lessonRepoInstance, courseRepoInstance, classLevelRepoInstance, studentEnrollmentServiceInstance);
 
 export const moduleServiceInstance =  new ModuleService(lessonRepoInstance, moduleRepoInstance);
 export const subModuleServiceInstance = new SubModuleService(subModuleRepoInstance, moduleRepoInstance);
@@ -86,13 +85,13 @@ export const quizServiceInstance = new QuizService(
 export const learningServiceInstance =  new LearningService(
     moduleServiceInstance, 
     subModuleServiceInstance, 
-    enrollmentServiceInstance, 
+    studentEnrollmentServiceInstance, 
     courseRepoInstance
 );
 
 export const learningSyncServiceInstance = new LearningSyncService(subModuleProgressServiceInstance, studentProfileRepoInstance, moduleProgressServiceInstance, subModuleServiceInstance);
 export const learningSessionServiceInstance =  new LearningSession(
-    enrollmentServiceInstance, 
+    studentEnrollmentServiceInstance, 
     courseRepoInstance, 
     lessonRepoInstance,
     moduleServiceInstance, 
@@ -111,8 +110,7 @@ export const learningNavigationServiceInstance = new LearningNavigation(
 
 
 //Controller
-export const studentCourseControllerInstance = new StudentCourseController(studentCourseServiceInstance);
-
+export const studentEnrollControllerInstance = new EnrollmentController(studentEnrollmentServiceInstance);
 export const LessonControllerInstance = new LessonController(lessonServiceInstance);
 export const moduleControllerInstance = new ModuleController(moduleServiceInstance);
 export const submoduleControllerInstance = new SubModuleController(subModuleServiceInstance);
