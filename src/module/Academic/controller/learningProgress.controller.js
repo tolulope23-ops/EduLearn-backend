@@ -1,4 +1,4 @@
-import { StudentProfileRepository } from "../../Auth/repository/studentProfile.repository.js";
+import { StudentProfileRepository } from "../../auth/repository/studentProfile.repository.js";
 import { LearningProgress } from "../service/learningProgress.service.js";
 import { SubModuleService } from "../service/subModule.service.js";
 import { SubmoduleProgressService } from "../service/subModuleProgress.service.js";
@@ -160,6 +160,4 @@ export class LearningProgressController{
             next(error);
         }
     }
-
-
 };
