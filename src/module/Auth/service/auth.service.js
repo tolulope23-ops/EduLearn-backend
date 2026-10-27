@@ -1,16 +1,11 @@
-import { DuplicateRecordError, InvalidCredentialsError, RecordNotFoundError} from "../../../common/error/domainError.error.js";
+import { DuplicateRecordError, InvalidCredentialsError} from "../../../common/error/domainError.error.js";
 import { UserAuthRepository } from "../repository/authCredential.repository.js";
-import { RoleRepository } from "../repository/role.repository.js";
 import { UserRepository } from "../repository/user.repository.js";
-import { UserRoleRepository } from "../repository/userRole.repository.js";
-// import { UserAuthVerificationRepository } from "../repository/verificationToken.repository.js";
 import { PasswordHasher } from "../utils/passwordHashing.utils.js";
 import { generateAccessToken } from "../utils/verificationToken.utils.js";
 import { UserRefreshTokenService } from "./refreshToken.service.js";
 import { UserSessionService } from "./session.service.js";
 import { StudentProfileService } from "./studentProfile.service.js";
-// import { UserAuthVerificationService } from "./verification.service.js";
-import { getFirstName } from "../utils/passwordHashing.utils.js";
 
 export class UserAuthService {
   /**
@@ -19,32 +14,21 @@ export class UserAuthService {
    * @param {PasswordHasher} hashPassword
    * @param {UserSessionService} session 
    * @param {UserRefreshTokenService} refreshToken
-   * @param {UserRoleRepository} userRole
-   * @param {RoleRepository} role
    * @param {StudentProfileService} studentService
    */
   constructor(
     userRepo, 
     userAuth, 
     hashPassword, 
-    // verifyService,
-    // verifyRepo,
     session, 
     refreshToken, 
-    userRole, 
-    role,
     studentService
   ) {
     this.userRepo = userRepo;
     this.userAuth = userAuth;
     this.hashPassword = hashPassword;
-    // this.verifyService = verifyService;
-    // this.verifyRepo = verifyRepo
-
     this.session = session;
     this.refreshToken = refreshToken;
-    this.userRole = userRole;
-    this.role = role;
     this.studentService = studentService;
   }
 
@@ -67,11 +51,6 @@ export class UserAuthService {
       type: "PASSWORD",
       secretHash: hashedPassword
     });
-    
-    // Assign default role
-    const roleEntity = await this.role.getRoleByName("STUDENT");
-
-    await this.userRole.assignRoleToUser({ userId: newUser.id, roleId: roleEntity.id });
 
     //Create student profile
     const profile = await this.studentService.createStudentProfile({
@@ -79,21 +58,6 @@ export class UserAuthService {
       fullName,
       location,
     });
-    
-    //Mark email verified, instead of sending verifiation email to verify by user(implement later)
-    // await this.userRepo.markEmailVerified(newUser.id);
-    // await this.userRepo.markEmailVerified(user.id);
-    // Send email verification
-    // this.verifyService
-    //   .sendAuthVerification(
-    //     newUser.id,
-    //     email,
-    //     "EMAIL_VERIFICATION",
-    //     getFirstName(profile.fullName)
-    //   )
-    //   .catch((error) => {
-    //     console.error("Verification email failed:", error.message);
-    //   });
 
     return {
       success: true,
@@ -142,6 +106,9 @@ export class UserAuthService {
       throw new InvalidCredentialsError("Invalid email or password");
     };
 
+    //check if user is a new user or returning user
+    const onboardedUser = user.enrolled;
+
     // Reset failed attempts on success
     // await this.userAuth.resetFailedAttempts(user.id);
 
@@ -156,7 +123,7 @@ export class UserAuthService {
     // Generate access token
     const accessToken = await generateAccessToken(user.id, userSession.id);
 
-    return { accessToken, refreshToken };
+    return { userOnboarded:onboardedUser, accessToken, refreshToken };
   };
 
   /** VERIFY EMAIL */
