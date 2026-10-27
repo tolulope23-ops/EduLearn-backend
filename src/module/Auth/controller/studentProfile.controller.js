@@ -34,29 +34,13 @@ export class StudentProfileController {
 
         return res.status(200).json({
             success: true,
-            data: profile
+            message: profile.message,
+            data: profile.data
         });
 
         } catch (error) {
             next(error);
         };
-  };
-
-  // GET PROFILE BY ID (admin or internal use)
-    getProfileById = async (req, res, next) => {
-        try {
-            const { id } = req.params;
-
-            const profile = await this.studentProfileService.getStudentProfileById(id);
-
-        return res.status(200).json({
-            success: true,
-            data: profile
-        });
-
-        } catch (error) {
-            next(error);
-        }
     };
 
   // UPDATE PROFILE
@@ -69,23 +53,8 @@ export class StudentProfileController {
 
         return res.status(200).json({
             success: true,
-            message: 'Profile updated successfully',
-            data: updatedProfile
-        });
-
-        } catch (error) {
-            next(error);
-        }
-    };
-
-  // DELETE PROFILE
-    deleteProfile = async(req, res, next) => {
-        try {
-            const userId = req.user.userId;
-            await this.studentProfileService.deleteStudentProfile(userId);
-        return res.status(200).json({
-            success: true,
-            message: 'Profile deleted successfully',
+            message: updatedProfile.message,
+            data: updatedProfile.data
         });
 
         } catch (error) {
