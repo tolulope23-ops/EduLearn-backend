@@ -8,7 +8,7 @@ import SubmoduleProgress from './subModuleProgress.model.js';
 import StudentProfile from '../../auth/models/studentProfile.model.js';
 import QuizQuestion from './quizQuestion.model.js';
 import QuizOption from './quizOption.model.js';
-import Enrollment from '../../auth/models/enrollment.model.js';
+import Enrollment from './enrollment.model.js';
 
 // StudentProfile → Enrollment
 StudentProfile.hasOne(Enrollment, { foreignKey: "studentId", as: "enrollment"});
