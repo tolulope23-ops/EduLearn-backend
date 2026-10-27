@@ -3,50 +3,6 @@ import { handleSequelizeError } from "../../../common/error/sequeliseError.error
 import { RecordNotFoundError } from "../../../common/error/domainError.error.js";
 
 export class LessonRepository {
-
-  async createLesson(data) {
-    try {
-      const lesson = await Lesson.create(data);
-      return this.mapToLessonEntity(lesson);
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
-  async updateLesson(id, data) {
-    try {
-      const [affectedRows] = await Lesson.update(data, { where: { id } });
-
-      if (affectedRows === 0) {
-        throw new RecordNotFoundError("Lesson not found");
-      };
-
-      const updatedLesson = await Lesson.findByPk(id);
-
-      return this.mapToLessonEntity(updatedLesson);
-
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
-  async deleteLesson(id) {
-    try {
-      const deletedRows = await Lesson.destroy({ where: { id } });
-
-      if (deletedRows === 0) {
-        throw new RecordNotFoundError("Lesson not found");
-      }
-
-      return true;
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
   async getLessonById(id) {
     try {
       const lesson = await Lesson.findByPk(id);

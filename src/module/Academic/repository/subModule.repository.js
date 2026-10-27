@@ -1,51 +1,7 @@
 import SubModule from "../models/subModule.model.js";
 import { handleSequelizeError } from "../../../common/error/sequeliseError.error.js";
-import { RecordNotFoundError } from "../../../common/error/domainError.error.js";
 
 export class SubModuleRepository {
-
-  async createSubmodule(data) {
-    try {
-      const submodule = await SubModule.create(data);
-      return this.mapToSubModuleEntity(submodule);
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
-  async updateSubmodule(id, data) {
-    try {
-      const [affectedRows] = await SubModule.update(data, { where: { id } });
-
-      if (affectedRows === 0) {
-        throw new RecordNotFoundError("Submodule not found");
-      }
-
-      const updatedSubmodule = await SubModule.findByPk(id);
-      return this.mapToSubModuleEntity(updatedSubmodule);
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
-
-  async deleteSubmodule(id) {
-    try {
-      const deletedRows = await SubModule.destroy({ where: { id } });
-
-      if (deletedRows === 0) {
-        throw new RecordNotFoundError("Submodule not found");
-      }
-
-      return true;
-    } catch (error) {
-      handleSequelizeError(error);
-    }
-  };
-
-
   async getSubmoduleById(id) {
     try {
       const submodule = await SubModule.findByPk(id);
