@@ -13,25 +13,6 @@ export class SubModuleService {
         this.moduleRepo = moduleRepo
     };
 
-    async createsubModule({ moduleId, title, type, contentText, contentUrl, downloadable, contentSize, sequenceNumber }) {
-        const module = await this.moduleRepo.getModuleById(moduleId);
-        if (!module) 
-            throw new RecordNotFoundError("Module not found");
-
-        const data = {
-            moduleId,
-            title,
-            type,
-            contentText,
-            contentUrl,
-            downloadable,
-            contentSize,
-            sequenceNumber
-        };
-
-        return await this.subModuleRepo.createSubmodule(data);
-    };
-    
 
     async getSubmoduleById(subModuleId) {
         const subModule = await this.subModuleRepo.getSubmoduleById(subModuleId);
@@ -60,24 +41,5 @@ export class SubModuleService {
             throw new RecordNotFoundError("SubModule not found");
 
         return subModule;
-    };
-
-
-    async updateSubmodule(subModuleId, updateData) {
-        const subModule = await this.subModuleRepo.getSubmoduleById(subModuleId);
-
-        if (!subModule) 
-            throw new RecordNotFoundError("SubModule not found");
-
-        return await this.subModuleRepo.updateSubmodule(subModuleId, updateData);
-    };
-
-
-    async deleteSubmodule(subModuleId) {
-        const subModule = await this.subModuleRepo.getSubmoduleById(subModuleId);
-        if (!subModule) 
-            throw new RecordNotFoundError("SubModule not found");
-
-        return await this.subModuleRepo.deleteSubmodule(subModuleId);
     };
 };

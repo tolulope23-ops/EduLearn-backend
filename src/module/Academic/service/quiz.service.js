@@ -5,7 +5,7 @@ import { SubModuleRepository } from "../repository/subModule.repository.js";
 import { SubModuleService } from "./subModule.service.js";
 import { ModuleProgressService } from "./moduleProgress.service.js";
 import { LearningProgress } from "./learningProgress.service.js";
-import { StudentProfileRepository } from "../../Auth/repository/studentProfile.repository.js";
+import { StudentProfileRepository } from "../../auth/repository/studentProfile.repository.js";
 import { SubmoduleProgressService } from "./subModuleProgress.service.js";
 
 
@@ -31,60 +31,6 @@ export class QuizService {
     this.learningProgressService = learningProgressService;
     this.studentProfileRepo = studentProfileRepo;
   };
-
-// Create bulk quiz question (Admin)
-    async createBulkQuizQuestions(questionsArray) {
-        if (!Array.isArray(questionsArray) || questionsArray.length === 0) {
-            throw new Error("Questions array is required");
-        }
-
-        // Map each object to match repo field names
-        const questions = questionsArray.map(q => ({
-            submoduleId: q.submoduleId,
-            question: q.questionText,
-            sequenceNumber: q.sequenceNumber ?? null
-        }));
-
-        // Call repo once with the full array
-        const createdQuestions = await this.questionRepo.bulkCreateQuizQuestions(questions);
-
-        return createdQuestions;
-    };
-
-// Update quiz question
-    updateQuizQuestion = async (questionId, updateData) => {
-        return await this.questionRepo.updateQuizQuestion(questionId, updateData);
-    };
-
-// Delete quiz question
-    deleteQuizQuestion = async (id) => {
-        return await this.questionRepo.deleteQuizQuestion(id);
-    };
-
-//Updates quiz option 
-    updateQuizOption = async (id, updateData) => {
-        return await this.optionRepo.updateQuizOption(id, updateData);
-    };
-
-// Deletes quiz option
-    deleteQuizOption = async (id) => {
-        return await this.optionRepo.deleteQuizOption(id);
-    };
-
-
-// Add options to a quiz question (Admin)
-    async addQuizOptions(optionArray) {
-
-    // options: [{ option: 'A', isCorrect: true }, { option: 'B', isCorrect: false }]
-        const optionsArray = optionArray.map(opt => ({
-            questionId: opt.questionId,
-            option: opt.optionText,
-            isCorrect: opt.isCorrect,
-        }));
-
-        return await this.optionRepo.bulkCreateQuizOptions(optionsArray);
-    };
-
 
 // Fetch all quiz questions with their option for a submodule (student-facing)
     async getQuizBySubmodule() {

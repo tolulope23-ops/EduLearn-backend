@@ -13,26 +13,6 @@ export class ModuleService{
         this.moduleRepo = moduleRepo;
     };
 
-    async createModule({lessonId, title, description, sequenceNumber }) {
-        const lesson = await this.lessonRepo.getLessonById(lessonId);
-
-        if (!lesson)
-            throw new RecordNotFoundError("Lesson not found");
-
-        const data = {
-            lessonId,
-            title,
-            description,
-            sequenceNumber
-        };
-
-        const module = await this.moduleRepo.createModule(data);
-        console.log("service", module);
-
-        return { message: 'Module created successfully', data: module};
-    };
-
-
     async getModule(moduleId) {
 
         const module = await this.moduleRepo.getModuleById(moduleId);
@@ -68,27 +48,5 @@ export class ModuleService{
             throw new RecordNotFoundError("Module not found");
 
         return { message: 'Module by sequence', data: module};
-    };
-
-
-    async updateModule(moduleId, updateData) {
-
-        const module = await this.moduleRepo.getModuleById(moduleId);
-
-        if (!module)
-            throw new RecordNotFoundError("Module not found");
-
-        return await this.moduleRepo.updateModule(moduleId, updateData);
-    };
-
-
-    async deleteModule(moduleId) {
-
-        const module = await this.moduleRepo.getModuleById(moduleId);
-
-        if (!module)
-            throw new RecordNotFoundError("Module not found");
-
-        return await this.moduleRepo.deleteModule(moduleId);
     };
 };
