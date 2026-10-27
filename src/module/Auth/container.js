@@ -3,37 +3,27 @@ import { UserAuthRepository } from "./repository/authCredential.repository.js";
 
 import { UserAuthService } from "./service/auth.service.js";
 import { PasswordHasher } from "./utils/passwordHashing.utils.js";
-// import { UserAuthVerificationService } from "./service/verification.service.js";
-// import { UserAuthVerificationRepository } from "./repository/verificationToken.repository.js";
-import { EmailService } from "./service/emailService.service.js";
 import { UserSessionService } from "./service/session.service.js";
 import { UserSessionRepository } from "./repository/authSession.repository.js";
 import { UserRefreshTokenService } from "./service/refreshToken.service.js";
+
 import { UserRefreshTokenRepository } from "./repository/refreshToken.repository.js";
 import { UserAuthMiddleware } from "../../common/middleware/auth.middleware.js";
 import { UserAuthController } from "./controller/auth.controller.js";
-import { RoleRepository } from "./repository/role.repository.js";
-import { UserRoleRepository } from "./repository/userRole.repository.js";
 import { StudentProfileService } from "./service/studentProfile.service.js";
 import { StudentProfileRepository } from "./repository/studentProfile.repository.js";
 import { StudentProfileController } from "./controller/studentProfile.controller.js";
-import { ClassLevelRepository } from "../Academic/repository/classLevel.repository.js";
+import { ClassLevelRepository } from "../academic/repository/classLevel.repository.js";
 
 // Repositories
 const userRepoInstance = new UserRepository();
 const userAuthRepoInstance = new UserAuthRepository();
 const passwordHash = new PasswordHasher();
-const roleRep = new RoleRepository();
-const userRole = new UserRoleRepository();
-
-// const userVerificationRepoInstance = new UserAuthVerificationRepository();
-const emailInstance = new EmailService();
 
 const sessionRepoInstance = new UserSessionRepository();
 const refreshTokenRepoInstance = new UserRefreshTokenRepository();
 const studentProfileRepoInstance = new StudentProfileRepository();
 const classLevelRepoInstance = new ClassLevelRepository();
-
 
 
 // Services
@@ -44,24 +34,14 @@ export const refreshTokenService = new UserRefreshTokenService(
   sessionService
 );
 
-// export const verificationService = new UserAuthVerificationService(
-//   userVerificationRepoInstance,
-//   emailInstance,
-//   userRepoInstance
-// );
-
 export const studentServiceInstance = new StudentProfileService(studentProfileRepoInstance, classLevelRepoInstance);
 
 export const authService = new UserAuthService(
   userRepoInstance,
   userAuthRepoInstance,
   passwordHash,
-  // verificationService,
-  // userVerificationRepoInstance,
   sessionService,
   refreshTokenService,
-  userRole,
-  roleRep,
   studentServiceInstance
 );
 
