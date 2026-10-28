@@ -1,4 +1,4 @@
-import sequelize from "../../../common/database/connection.js";
+import sequelize from "../../../database/connection.js";
 import { DataTypes } from "sequelize";
 
 const Lesson = sequelize.define("Lesson", {

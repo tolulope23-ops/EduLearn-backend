@@ -1,6 +1,6 @@
 import app from './app.js';
 import {PORT} from './common/config/env.config.js';
-import { authenticateDB } from './common/database/connection.js';
+import { authenticateDB } from './database/connection.js';
 
 
 authenticateDB();

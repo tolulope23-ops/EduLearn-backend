@@ -14,18 +14,7 @@ import progressRoutes from './module/academic/routes/learningProgress.routes.js'
 import syncProgress from './module/academic/routes/learningSync.routes.js';
 
 //Ai Routes
-
 import aiRoutes from './Integration/AI/ai.routes.js';
-
-
-//Admin Routes
-import adminRoutes from './common/config/admin.js';
-import lessonRoutes from './module/Academic/routes/lesson.routes.js';
-import moduleRoutes from './module/Academic/routes/module.route.js'
-import submoduleRoutes from './module/Academic/routes/submodule.routes.js';
-import quizRoutes from './module/Academic/routes/quiz.routes.js';
-
-
 
 const app = express();
 
@@ -33,17 +22,6 @@ app.use(corsMiddleware);
 app.use(cookieParser());
 app.use(express.json());
 
-//Admin
-app.use('/admin', adminRoutes);
-app.use('/api/v1/lesson', lessonRoutes);
-app.use('/api/v1/module', moduleRoutes);
-app.use('/api/v1/submodule', submoduleRoutes);
-
-
-app.use('/api/v1/submodule/quiz', quizRoutes);
-
-
-//Student
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/enroll', onboardRoutes)
