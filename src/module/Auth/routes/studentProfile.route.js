@@ -8,9 +8,6 @@ const router = Router();
 //Get current user profile
 router.get('/me', authMiddleware.authenticate(), studentProfileController.getMyProfile);
 
-// Get student profile(by admin)
-router.get('/:id', studentProfileController.getProfileById);
-
 //Update student profile
 router.patch('/me', authMiddleware.authenticate(), validationMiddleware(updateStudentProfileSchema), studentProfileController.updateProfile);
 
